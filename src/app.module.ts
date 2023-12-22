@@ -17,6 +17,8 @@ import { JobModule } from './job/job.module';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
+      playground: true,
+      introspection: true,
     }),
     ScheduleModule.forRoot(),
     JobModule,

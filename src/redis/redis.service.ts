@@ -20,7 +20,7 @@ export class RedisService {
     this.ttlPodcast = 60 * 60 * 24 * 7 * 2;
     // 15 minutes
     this.ttlRateLimit = 60 * 15;
-    this.rateLimit = 3;
+    this.rateLimit = config.get('RATE_LIMIT');
     this.disable = config.get('REDIS_DISABLE') === 'true' ? true : false;
   }
 

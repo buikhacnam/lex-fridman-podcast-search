@@ -15,8 +15,11 @@ export class RateLimitGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context);
     const request = ctx.getContext().req;
-    const ip = request.headers['x-forwarded-for'] || request.ip;
-    console.log('ip', ip);
+    const ip =
+      request.headers['x-forwarded-for'] ||
+      request.connection.remoteAddress ||
+      request.ip;
+    console.log('IP: ', ip);
     const isLimited = await this.redisService.incrementAndCheckRateLimit(ip);
 
     if (isLimited) {

@@ -7,8 +7,11 @@ import {
   Permissions,
 } from '../auth/decorators/permissions.decorator';
 import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
+import { UseGuards } from '@nestjs/common';
+import { RateLimitGuard } from 'src/auth/guards/rateLimit.guard';
 
 @Resolver(() => User)
+@UseGuards(RateLimitGuard)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 

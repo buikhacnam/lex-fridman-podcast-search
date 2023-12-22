@@ -28,7 +28,6 @@ type Mutation {
   getRefreshToken: AuthResponse!
   signin(signInInput: SignInInput!): AuthResponse!
   signout(tokenId: String!): LogoutResponse!
-  signup(signUpInput: SignUpInput!): AuthResponse!
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
@@ -60,23 +59,13 @@ type PodcastPageInfo {
 }
 
 type Query {
-  adminAndUserCanQuery: String!
-  adminCanQuery: String!
   findAllUser: [User!]!
   me: User!
-  public: String!
   searchPodcast(cursor: Int, limit: Int = 10, order: String = "desc", title: String): PaginatedPodcast!
 }
 
 input SignInInput {
   email: String!
-  password: String!
-}
-
-input SignUpInput {
-  email: String!
-  firstName: String!
-  lastName: String!
   password: String!
 }
 

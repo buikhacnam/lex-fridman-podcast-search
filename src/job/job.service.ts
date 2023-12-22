@@ -13,12 +13,12 @@ export class JobService {
   ) {}
 
   @Cron(CronExpression.EVERY_DAY_AT_9PM)
-  async handleCron() {
-    // const now = new Date();
-    // const whatTimeIsIt = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
-    // console.log(whatTimeIsIt + '| cron job running...');
-    // await this.getLexFridmanPodcasts();
-    // console.log('cron job done.');
+  async handlePodcastCron() {
+    const now = new Date();
+    const whatTimeIsIt = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+    console.log(whatTimeIsIt + '| cron job running...');
+    await this.getLexFridmanPodcasts();
+    console.log('cron job done.');
   }
 
   private async getLexFridmanPodcasts(): Promise<void> {
