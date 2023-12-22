@@ -9,6 +9,16 @@ type AuthResponse {
   userInfo: UserInfo!
 }
 
+type Chapter {
+  end: Int
+  name: String!
+  orderNum: Int!
+  podcastId: Int!
+  start: Int!
+  timestamp: String!
+  videoId: String!
+}
+
 type LogoutResponse {
   loggedOut: Boolean!
 }
@@ -22,12 +32,40 @@ type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
+type PaginatedPodcast {
+  edges: [PodcastEdge!]
+  pageInfo: PodcastPageInfo!
+  totalCount: Int!
+}
+
+type Podcast {
+  chapters: [Chapter]!
+  episode: String!
+  guest: String!
+  id: Int!
+  publishedAt: String!
+  thumbnail: String!
+  title: String!
+  videoId: String!
+}
+
+type PodcastEdge {
+  cursor: Int!
+  node: Podcast!
+}
+
+type PodcastPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean!
+}
+
 type Query {
   adminAndUserCanQuery: String!
   adminCanQuery: String!
   findAllUser: [User!]!
   me: User!
   public: String!
+  searchPodcast(cursor: Int, limit: Int = 10, order: String = "desc", title: String): PaginatedPodcast!
 }
 
 input SignInInput {

@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,6 +5,7 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model User {
@@ -21,6 +19,8 @@ model User {
   updatedAt DateTime @updatedAt @map("updated_at")
   roleId    Int      @default(2) @map("role_id")
   role      Role     @relation(fields: [roleId], references: [id])
+
+  @@index([roleId])
 }
 
 model Token {
@@ -31,6 +31,8 @@ model Token {
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model Role {
@@ -53,4 +55,29 @@ model Permission {
 enum RoleName {
   ADMIN //1
   USER //2
+}
+
+model Podcast {
+  id          Int       @id @default(autoincrement())
+  videoId     String    @unique @map(name: "video_id")
+  title       String
+  publishedAt String    @map(name: "published_at")
+  episode     String    @unique
+  guest       String
+  thumbnail   String
+  chapters    Chapter[]
+}
+
+model Chapter {
+  id        Int      @id @default(autoincrement())
+  videoId   String   @map(name: "video_id")
+  name      String
+  orderNum  Int      @map(name: "order_num")
+  timestamp String
+  start     Int
+  end       Int?
+  Podcast   Podcast? @relation(fields: [podcastId], references: [id], onDelete: Cascade)
+  podcastId Int?     @map(name: "podcast_id")
+
+  @@index([podcastId])
 }
