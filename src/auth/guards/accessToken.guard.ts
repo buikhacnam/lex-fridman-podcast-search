@@ -24,11 +24,6 @@ export class AccessTokenGuard extends AuthGuard('jwt') {
       [context.getHandler(), context.getClass()], // you can use this to set permissions on both the resolver and the query/mutation
     );
 
-    console.log(
-      'required permissions: ',
-      requiredPermissions ?? 'no permissions required',
-    );
-
     //if there is no permissions decorator, then it is public
     if (!requiredPermissions) {
       return true;

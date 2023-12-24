@@ -3,6 +3,7 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  Logger,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
@@ -25,6 +26,8 @@ export class AuthService {
     private configService: ConfigService,
   ) {}
 
+  private readonly logger = new Logger(AuthService.name);
+
   async signIn(dto: SignInInput) {
     const user = await this.prismaService.user.findUnique({
       where: {
@@ -33,6 +36,7 @@ export class AuthService {
     });
 
     if (!user) {
+      this.logger.log(`User ${dto.email} not found`);
       throw new ForbiddenException('Credentials incorrect');
     }
 
@@ -46,6 +50,8 @@ export class AuthService {
     if (!isMatch) {
       throw new ForbiddenException('Credentilas incorrect');
     }
+
+    this.logger.log(`User ${user.email} logged in`);
 
     return await this.handeleSigin(user);
   }

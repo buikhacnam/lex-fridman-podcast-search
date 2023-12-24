@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { Chapter } from 'src/chapter/entities/chapter.entity';
 import { Podcast } from 'src/podcast/entities/podcast.entity';
@@ -7,8 +7,10 @@ import { RedisService } from 'src/redis/redis.service';
 import YoutubeChaptersFinder from 'youtube-chapters-finder';
 @Injectable()
 export class JobService {
+  private readonly logger = new Logger(JobService.name);
+
   constructor(
-    private prisma: PrismaService,
+    private readonly prisma: PrismaService,
     private readonly redisService: RedisService,
   ) {}
 
@@ -16,9 +18,9 @@ export class JobService {
   async handlePodcastCron() {
     const now = new Date();
     const whatTimeIsIt = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
-    console.log(whatTimeIsIt + '| cron job running...');
+    this.logger.log(whatTimeIsIt + '| cron job running...');
     await this.getLexFridmanPodcasts();
-    console.log('cron job done.');
+    this.logger.log('cron job done.');
   }
 
   private async getLexFridmanPodcasts(): Promise<void> {
@@ -76,10 +78,10 @@ export class JobService {
 
     let videoList = await Promise.all(videoListPromises);
     videoList = videoList.filter((item) => item !== null);
-    console.log('saving....');
+    this.logger.log('saving....');
 
     if (videoList?.length === 0) {
-      console.error('No new videos found.');
+      this.logger.error('No new videos found.');
       return;
     }
 
@@ -114,7 +116,7 @@ export class JobService {
     }
 
     await this.redisService.removePodcastCache();
-    console.log('DONE SAVING');
+    this.logger.log('DONE SAVING');
   }
 
   private async extractChapters(videoId: string, videoTitle: string) {

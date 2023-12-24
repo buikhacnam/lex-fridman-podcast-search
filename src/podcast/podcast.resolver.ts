@@ -7,11 +7,12 @@ import {
   Permission,
   Permissions,
 } from 'src/auth/decorators/permissions.decorator';
-import { UseGuards } from '@nestjs/common';
+import { Logger, UseGuards } from '@nestjs/common';
 import { RateLimitGuard } from 'src/auth/guards/rateLimit.guard';
 @Resolver(() => Podcast)
 @UseGuards(RateLimitGuard)
 export class PodcastResolver {
+  private readonly logger = new Logger(PodcastResolver.name);
   constructor(
     private readonly podcastService: PodcastService,
     private readonly redisService: RedisService,
@@ -26,15 +27,14 @@ export class PodcastResolver {
     const limit = Math.max(Math.min(podcastArgs?.limit, 20), 2);
     const cursor = podcastArgs?.cursor ?? undefined;
     const args = title + order + limit + cursor;
-    const cacheKey = `podcast-${args}`;
-    console.log('cacheKey', cacheKey);
+    const cacheKey = `${this.redisService.podcastKey}${args}`;
     let result: any = await this.redisService.get(cacheKey);
     if (!result) {
-      console.log('No cache found, fetching from database');
+      this.logger.log('No cache found: ' + cacheKey);
       result = await this.podcastService.searchPodcast(podcastArgs);
       await this.redisService.set(cacheKey, JSON.stringify(result));
     } else {
-      console.log('Cache found, returning cached data');
+      this.logger.log('Cache found: ' + cacheKey);
       result = JSON.parse(result);
     }
     return result;

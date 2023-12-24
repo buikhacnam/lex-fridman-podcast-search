@@ -26,6 +26,10 @@ type LogoutResponse {
 type Mutation {
   blockUser(email: String!): String!
   getRefreshToken: AuthResponse!
+  podcastCron: String!
+  removeAll: String!
+  removeAllRateLimit: String!
+  removePodcastCache: String!
   signin(signInInput: SignInInput!): AuthResponse!
   signout(tokenId: String!): LogoutResponse!
   updateUser(updateUserInput: UpdateUserInput!): User!

@@ -9,6 +9,7 @@ import { AccessTokenGuard } from './auth/guards/accessToken.guard';
 import { PodcastModule } from './podcast/podcast.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { JobModule } from './job/job.module';
+import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { JobModule } from './job/job.module';
       introspection: true,
     }),
     ScheduleModule.forRoot(),
+    RedisModule,
     JobModule,
     AuthModule,
     UserModule,

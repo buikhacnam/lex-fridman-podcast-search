@@ -41,3 +41,4 @@ lerna-debug.log*
 prisma/seed1.ts
 
 export
+doc

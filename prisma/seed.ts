@@ -20,14 +20,6 @@ async function main() {
   (1,2),
   (1,3),
   (2,2);`;
-
-  // Admin
-  await prisma.$executeRaw`insert into user (id, email, password, created_at, first_name, last_name, role_id, updated_at)
-  values('e0ff5ba4-eb83-4d5c-8f0c-d5cdec039d78', 'admin@email.com','$argon2id$v=19$m=65536,t=3,p=4$CSxPaMZp86KcWVTkpUHBXQ$Gpxsszn8g+mjjOJO70eqfalLFqd72jcuB4B/o8qZ9Qw', now(), 'admin', 'me', 1, now());`;
-
-  // User
-  await prisma.$executeRaw`insert into user (id, email, password, created_at, first_name, last_name, role_id, updated_at)
-  values('e0ff5ba4-eb83-4d5c-8f0c-d5cdec039d79', 'user1@email.com','$argon2id$v=19$m=65536,t=3,p=4$CSxPaMZp86KcWVTkpUHBXQ$Gpxsszn8g+mjjOJO70eqfalLFqd72jcuB4B/o8qZ9Qw', now(), 'user', '1', 2, now());`;
 }
 main()
   .then(async () => {
