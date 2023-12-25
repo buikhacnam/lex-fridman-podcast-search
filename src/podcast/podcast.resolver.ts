@@ -3,10 +3,10 @@ import { PodcastService } from './podcast.service';
 import { PaginatedPodcast, Podcast } from './entities/podcast.entity';
 import { PodcastArgs } from './dto/podcast.args';
 import { RedisService } from 'src/redis/redis.service';
-import {
-  Permission,
-  Permissions,
-} from 'src/auth/decorators/permissions.decorator';
+// import {
+//   Permission,
+//   Permissions,
+// } from 'src/auth/decorators/permissions.decorator';
 import { Logger, UseGuards } from '@nestjs/common';
 import { RateLimitGuard } from 'src/auth/guards/rateLimit.guard';
 @Resolver(() => Podcast)
@@ -19,7 +19,7 @@ export class PodcastResolver {
   ) {}
 
   @Query(() => PaginatedPodcast, { name: 'searchPodcast' })
-  @Permissions(Permission.GENERAL_USER_PERMISSION)
+  // @Permissions(Permission.GENERAL_USER_PERMISSION)
   async search(@Args() podcastArgs: PodcastArgs) {
     console.log('podcastArgs', podcastArgs);
     const title = podcastArgs?.title ?? undefined;

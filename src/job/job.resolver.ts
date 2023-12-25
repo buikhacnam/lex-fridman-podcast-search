@@ -8,11 +8,11 @@ import {
 } from 'src/auth/decorators/permissions.decorator';
 @Resolver()
 @UseGuards(RateLimitGuard)
+@Permissions(Permission.GENERAL_ADMIN_PERMISSION)
 export class JobResolver {
   constructor(private readonly jobService: JobService) {}
 
   @Mutation(() => String)
-  @Permissions(Permission.GENERAL_ADMIN_PERMISSION)
   podcastCron() {
     this.jobService.handlePodcastCron();
     return 'ok';
