@@ -22,7 +22,7 @@ export class PodcastResolver {
   // @Permissions(Permission.GENERAL_USER_PERMISSION)
   async search(@Args() podcastArgs: PodcastArgs) {
     console.log('podcastArgs', podcastArgs);
-    const title = podcastArgs?.title ?? undefined;
+    const title = podcastArgs?.title?.toLowerCase() ?? undefined;
     const order = podcastArgs?.order === 'asc' ? 'asc' : 'desc';
     const limit = Math.max(Math.min(podcastArgs?.limit, 20), 2);
     const cursor = podcastArgs?.cursor ?? undefined;
