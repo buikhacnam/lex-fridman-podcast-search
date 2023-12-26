@@ -1,7 +1,7 @@
 {
   "name": "lex-fridman-podcast-search-chapter",
   "version": "1.0.0",
-  "description": "",
+  "description": "easily search for chapters in the Lex Fridman podcast",
   "author": "buikhacnam11@gmail.com",
   "private": true,
   "license": "MIT",
