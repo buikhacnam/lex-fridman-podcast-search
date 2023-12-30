@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { Chapter } from 'src/chapter/entities/chapter.entity';
 import { Podcast } from 'src/podcast/entities/podcast.entity';
@@ -12,6 +13,7 @@ export class JobService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly redisService: RedisService,
+    public config: ConfigService,
   ) {}
 
   @Cron(CronExpression.EVERY_DAY_AT_9PM)
@@ -53,7 +55,7 @@ export class JobService {
       });
 
       if (existed) {
-        console.error('existed');
+        console.warn('existed');
         return null;
       }
 
@@ -81,7 +83,7 @@ export class JobService {
     this.logger.log('saving....');
 
     if (videoList?.length === 0) {
-      this.logger.error('No new videos found.');
+      this.logger.warn('No new videos found.');
       return;
     }
 
@@ -116,6 +118,21 @@ export class JobService {
     }
 
     await this.redisService.removePodcastCache();
+
+    //revalidate cache in the frontend
+    const res = await fetch(
+      `${this.config.get('FRONTEND_URL')}/api/revalidate`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: this.config.get('REVALIDATE_SECRET_KEY'),
+        },
+      },
+    );
+
+    const status = await res.status;
+    this.logger.log('frontend revalidate status: ' + status);
+
     this.logger.log('DONE SAVING');
   }
 
