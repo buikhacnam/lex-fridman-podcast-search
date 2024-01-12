@@ -259,6 +259,12 @@ export class AuthService {
       },
     });
     if (userExist) {
+      if (userExist.password !== null) {
+        throw new ForbiddenException(
+          'Credentilas incorrect or this email was gotten from a social account',
+        );
+      }
+
       this.logger.log(`User ${user.email} logged in with social account`);
       return await this.handeleSigin(userExist);
     } else {
