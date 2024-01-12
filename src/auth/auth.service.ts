@@ -11,6 +11,7 @@ import { ConfigService } from '@nestjs/config';
 import * as argon from 'argon2';
 import { SignInInput } from './dto/signin-input';
 import { User } from '@prisma/client';
+import { User as UserEntity } from 'src/user/entities/user.entity';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { JwtPayload } from 'src/auth/types/types';
 import { SignUpInput } from './dto/singup-input';
@@ -247,6 +248,31 @@ export class AuthService {
       });
       console.log('invalid refresh token');
       throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+    }
+  }
+
+  async socialSignIn(user: UserEntity) {
+    this.logger.log(`User ${user.email} is signing in with social account`);
+    const userExist = await this.prismaService.user.findUnique({
+      where: {
+        email: user.email,
+      },
+    });
+    if (userExist) {
+      this.logger.log(`User ${user.email} logged in with social account`);
+      return await this.handeleSigin(userExist);
+    } else {
+      const newUser = await this.prismaService.user.create({
+        data: {
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          roleId: 2,
+        },
+      });
+      this.logger.log(`User ${user.email} signed up with social account`);
+
+      return await this.handeleSigin(newUser);
     }
   }
 }

@@ -10,6 +10,7 @@ import { PodcastModule } from './podcast/podcast.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { JobModule } from './job/job.module';
 import { RedisModule } from './redis/redis.module';
+import { GoogleAuthModule } from 'google-auth/google-auth.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { RedisModule } from './redis/redis.module';
     AuthModule,
     UserModule,
     PodcastModule,
+    GoogleAuthModule,
   ],
   providers: [
     {
