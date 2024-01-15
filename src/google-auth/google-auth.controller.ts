@@ -1,9 +1,11 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { GoogleAuthService } from './google-auth.service';
 import { GoogleAuthDto } from './dto/google-auth.dto';
 import { AuthService } from 'src/auth/auth.service';
+import { CustomGuard } from 'src/auth/guards/custom.guard';
 
 @Controller('auth/google')
+@UseGuards(CustomGuard)
 export class GoogleAuthController {
   constructor(
     private readonly googleAuthService: GoogleAuthService,
