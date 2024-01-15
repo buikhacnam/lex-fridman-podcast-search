@@ -11,6 +11,8 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { JobModule } from './job/job.module';
 import { RedisModule } from './redis/redis.module';
 import { GoogleAuthModule } from 'src/google-auth/google-auth.module';
+import { MailModule } from './mail/mail.module';
+import { MailerModule } from './mailer/mailer.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { GoogleAuthModule } from 'src/google-auth/google-auth.module';
     UserModule,
     PodcastModule,
     GoogleAuthModule,
+    MailModule,
+    MailerModule,
   ],
   providers: [
     {
