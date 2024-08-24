@@ -6278,7 +6278,7 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-youtube-chapters-finder@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/youtube-chapters-finder/-/youtube-chapters-finder-0.1.2.tgz#00b8c12c712ae370bffcd4c030b24d3201d01f8d"
-  integrity sha512-QWND0kPuiksEPEaA7oLEFEWOVpcmqiK5JHSpqfpqhko25INRkV0snYXuIP/KN16aRduXWthLjxgxbNAKMJgaqw==
+youtube-chapters-finder@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/youtube-chapters-finder/-/youtube-chapters-finder-0.2.1.tgz#e90a730683765e13d442c5350c0c9d710df73786"
+  integrity sha512-gnMtfculw+/mqVr132o090tFQhR5q5yhdWxWIVShqHbjzotMCMTNHP7LOuu3EsOQUv6dh5Zr+TfEe2QWcVvjXQ==

@@ -71,7 +71,7 @@ export class JobService {
         title,
         podcast: item.snippet.channelTitle,
         publishedAt: item.snippet.publishedAt,
-        thumbnail: item.snippet.thumbnails.medium.url,
+        thumbnail: item?.snippet?.thumbnails?.medium?.url,
         episode,
         guest,
         chapters,
