@@ -60,6 +60,10 @@ export class JobService {
       }
 
       const title = item.snippet.title;
+      if (title.includes('Deleted Video')) {
+        this.logger.warn('Deleted Video: ' + videoId);
+        return null;
+      }
       // title: title: 'Mohammed El-Kurd: Palestine | Lex Fridman Podcast #391',
       const episode = title.split('#')[1];
       const guest = title.split(':')[0];
@@ -112,6 +116,10 @@ export class JobService {
 
     // save all videos to db
     for (const video of videoList) {
+      if (!video.chapters.episode) {
+        this.logger.warn('private or deleted video: ' + video.videoId);
+        continue;
+      }
       await this.prisma.podcast.create({
         data: video,
       });
