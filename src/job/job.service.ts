@@ -116,7 +116,7 @@ export class JobService {
 
     // save all videos to db
     for (const video of videoList) {
-      if (!video.chapters.episode) {
+      if (!video.episode) {
         this.logger.warn('private or deleted video: ' + video.videoId);
         continue;
       }
